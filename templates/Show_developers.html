@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for dev in developer %}
+<br>
+<div class="card">
+  <div class="card-header" style="background-color:grey; color:white">
+    {{dev.name}}
+  </div>
+  <div class="card-body">
+    <p class="card-text">Location: {{dev.location}}</p>
+     <p class="card-text">Email: {{dev.email}}</p>
+    <p class="card-text">Domain: {% for dom in dev.domain.all %}{{dom}}{% endfor %}</p>
+    <p class="card-text">Technology: {% for tech in dev.technology.all %}{{tech}}{% endfor %}</p>
+    <p class="card-text">Experience: {{dev.experience}}</p>
+    <p class="card-text">Blogs: {{dev.blogs}}</p>
+    <p class="card-text">Project: {{dev.project}}</p>
+     <p class="card-text">Score: {{dev.score}}</p>
+      </div>
+</div>
+{% endfor %}
+{% endblock content %}
+
+</body>
+</html>

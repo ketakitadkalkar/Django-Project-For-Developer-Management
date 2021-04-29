@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table, tr,td, th{
+        border: 1px black solid;
+        border-collapse: collapse;
+        }
+        table{
+        margin-top: 80px;
+        margin-left:20px;
+        }
+    </style>
+
+</head>
+<body>
+{% if developer %}
+
+<table class="table">
+  <thead class="thead-dark">
+
+    <tr>
+
+      <th scope="col">Name</th>
+        <th scope="col">Email</th>
+      <th scope="col">Location</th>
+      <th scope="col">Experience</th>
+       <th scope="col">Technology</th>
+        <th scope="col">Domain</th>
+        <th scope="col">Blogs</th>
+        <th scope="col">Project</th>
+        <th scope="col">Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        {% for dev in developer %}
+
+      <td><a href="/posts/"> {{dev.name}}</a></td>
+      <td>{{dev.email}}</td>
+      <td>{{dev.location}}</td>
+        <td>{{dev.experience}}</td>
+        <td>{% for tech in dev.technology.all %}{{tech}}{% endfor %}</td>
+        <td>{% for dom in dev.domain.all %} {{dom}} {% endfor %}</td>
+        <td>{{ dev.blogs }}</td>
+        <td>{{dev.project}}</td>
+        <td>{{dev.score}}</td>
+        <td><a href="/edit/{{dev.id}}"><button class="btn btn-primary">Edit</button></a>
+        <a href="/delete/{{dev.id}}"><button class="btn btn-primary">Delete</button></a></td>
+    </tr>
+   {% endfor %}
+  {% else %}
+<h3>No data found!</h3>
+{% endif %}
+  </tbody>
+</table>
+</body>
+</html>
+
+{% endblock content %}

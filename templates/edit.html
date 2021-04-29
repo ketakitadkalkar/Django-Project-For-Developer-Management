@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %}Edit{% endblock title %}
+
+{% block content %}
+
+  <br>
+<h1>Enter developer Id: </h1>
+  <form action="" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+        {% buttons %}
+    <br>
+   <input type="submit" class="btn btn-primary" ></input>
+{% endbuttons %}
+  </form>
+{% endblock %}
