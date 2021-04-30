@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+
 from .forms import UserRegistration, LoginForm, EditForm, Search, Edit
 from .models import Developer, Employee, Technology
 from .forms import AddDeveloper
@@ -67,15 +69,21 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            # password = form.cleaned_data.get('password')
-            username1 = Employee.objects.filter(username=username).first()
-            # password1 = Employee.objects.filter(password=password)
+            # username = form.cleaned_data.get('username')
+            # # password = form.cleaned_data.get('password')
+            # username1 = Employee.objects.filter(username=username).first()
+            # # password1 = Employee.objects.filter(password=password)
             # print("========",username1, password1)
 
             # user = authenticate(username=username1, password=password1)
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-            if str(username) == str(username1):
+            user = authenticate(username=username, password=password)
+            print(username,password,user)
+            # if str(username) == str(username1):
+            if user:
+                request.session['username'] = username
                 return redirect("/home")
             else:
                 return HttpResponse("Invalid username or password.")
@@ -83,6 +91,32 @@ def login(request):
             return HttpResponse("Invalid form details.")
             form = LoginForm()
     return render(request=request, template_name="login.html", context={"form": form})
+# def login(request):
+#     form =LoginForm()
+#     if request.method == "POST":
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             username = request.POST.get('username')
+#             password = request.POST.get('password')
+#
+#             user = authenticate(username=username, password=password)
+#
+#             if user:
+#                 if user.is_active:
+#                     login(request, user)
+#                     return HttpResponseRedirect(reverse('/home'))
+#
+#                 else:
+#                     return HttpResponse("Account is not active")
+#
+#             else:
+#                 print("Some try to login and failed")
+#                 print("Username: {} & password: {}".format(username, password))
+#                 return HttpResponse("Invalid login credentials")
+#
+#         else:
+#             return render(request, 'login.html', {})
+#     return render(request=request, template_name="login.html", context={"form": form})
 
 
 # @login_required

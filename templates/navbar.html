@@ -1,3 +1,5 @@
+{% load bootstrap4 %}
+{% block content %}
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="color:white;" >
   <a class="navbar-brand" href="#">Developer</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,11 +19,21 @@
         <a class="nav-link" href="search" style="color:white;">Search</a>
       </li>
 
-      
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="logout" style="color:white;margin-right:0px;">Logout</a>
+      </li>
+
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="/" style="color:white;margin-right:0px;">Login</a>
+      </li>
+      {% endif %}
      </ul>
 
   </div>
 </nav>
+{% endblock content %}
 
 
 
